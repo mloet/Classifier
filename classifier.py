@@ -40,15 +40,10 @@ class AnimalBaselineNet(nn.Module):
 
 
 def model_train(net, inputs, labels, criterion, optimizer):
-    # TODO: Foward pass
-    # TODO-BLOCK-BEGIN
     labels = labels.reshape(-1)
     optimizer.zero_grad()
     outputs = net(inputs)
-    # TODO-BLOCK-END
 
-    # TODO: Backward pass
-    # TODO-BLOCK-BEGIN
     loss = criterion(outputs, labels)
     loss.backward()
     optimizer.step()
@@ -56,7 +51,6 @@ def model_train(net, inputs, labels, criterion, optimizer):
     total_images = inputs.shape[0]
     maxes = torch.argmax(outputs, 1)
     num_correct = (maxes == labels).int().sum()
-    # TODO-BLOCK-END
 
     return running_loss, num_correct, total_images
 
