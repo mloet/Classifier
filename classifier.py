@@ -9,10 +9,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 from torchvision import transforms, datasets
 
-#########################################################
-# BASELINE MODEL                                        #
-#########################################################
-
+# BASELINE MODEL                                      
 
 class AnimalBaselineNet(nn.Module):
     def __init__(self, num_classes=16):
@@ -54,10 +51,8 @@ def model_train(net, inputs, labels, criterion, optimizer):
 
     return running_loss, num_correct, total_images
 
-#########################################################
-# DATA AUGMENTATION
-#########################################################
 
+# DATA AUGMENTATION
 
 class Shift(object):
     def __init__(self, max_shift=10):
@@ -149,10 +144,7 @@ class HorizontalFlip(object):
     def __repr__(self):
         return self.__class__.__name__
 
-#########################################################
 # ADVERSARIAL IMAGES
-#########################################################
-
 
 def get_adversarial(img, output, label, net, criterion, epsilon):
     loss = criterion(output, label)
