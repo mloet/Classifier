@@ -143,7 +143,7 @@ def get_classifier_settings(net):
 
     return [t_transform, v_transform], batch_size, epochs, criterion, optimizer
 
-class AnimalClassifierNet(nn.Module):
+class AnimalClassifierNet(nn.Module): # Keeping model size to below 5MB to analyze changes in accuracy results
     def __init__(self, num_classes=16):
         super(AnimalClassifierNet, self).__init__()
         self.conv1 = nn.Conv2d(3, 18, 3, stride=1, padding=1)
