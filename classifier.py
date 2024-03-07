@@ -163,8 +163,10 @@ class AnimalClassifierNet(nn.Module): # Keeping model size to below 5MB to analy
         self.bn5 = nn.BatchNorm2d(288)
         self.relu = nn.ReLU()
         self.fc1 = nn.Linear(18 * 8 * 8, 576)
-        self.fc2 = nn.Linear(576, num_classes) 
-        self.dropout = nn.Dropout(0.5) # Dropout to combat risk of overfitting from extra layers and channels
+        self.dropout1 = nn.Dropout(0.5) # Dropout to combat risk of overfitting from extra layers and channels
+        self.fc2 = nn.Linear(576, 288)
+        self.dropout2 = nn.Dropout(0.5)
+        self.cls = nn.Linear(288, num_classes) 
 
     def forward(self, x):
         x = x.contiguous().view(-1, 3, 64, 64).float()
@@ -175,9 +177,11 @@ class AnimalClassifierNet(nn.Module): # Keeping model size to below 5MB to analy
         x = self.relu(self.bn4(self.pool4(self.conv4(x))))
         x = self.relu(self.bn5(self.pool5(self.conv5(x))))
         x = x.reshape(x.size(0), -1)
-        x = self.dropout(x)
         x = self.relu(self.fc1(x))
-        x = self.fc2(x)
+        x = self.dropout1(x)
+        x = self.relu(self.fc2(x))
+        x = self.dropout2(x)
+        x = self.cls(x)
         
         return x
 
